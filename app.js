@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var basicAuth = require('express-basic-auth');
 
 // route files
 var index = require('./routes/index');
@@ -14,13 +14,29 @@ var order = require('./routes/order');
 var examine = require('./routes/examine');
 var take = require('./routes/take');
 
+// app instance
 var app = express();
+
+// basic authentication
+app.use(basicAuth({
+    users: { 'happyrest': '1234' },
+    unauthorizedResponse: getUnauthorizedResponse
+}))
+
+function getUnauthorizedResponse(req) {
+    return req.auth ?
+        ('Credentials ' + req.auth.user + ':' + req.auth.password + ' rejected') :
+        'No credentials provided'
+}
+
+// route url
 app.get('/hikes', hike.index);
 app.post('/add_hike', hike.add_hike);
 app.get('/get_last_order', order.get_last_order);
 app.get('/get_order/:order_number', order.get_order);
 app.get('/get_examine_info/:order_number', examine.get_examine_info);
 app.get('/get_take_info/:order_number', take.get_take_info);
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
