@@ -11,12 +11,16 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var hike = require('./routes/hike');
 var order = require('./routes/order');
+var examine = require('./routes/examine');
+var take = require('./routes/take');
 
 var app = express();
 app.get('/hikes', hike.index);
 app.post('/add_hike', hike.add_hike);
 app.get('/get_last_order', order.get_last_order);
 app.get('/get_order/:order_number', order.get_order);
+app.get('/get_examine_info/:order_number', examine.get_examine_info);
+app.get('/get_take_info/:order_number', take.get_take_info);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
