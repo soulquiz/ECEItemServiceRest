@@ -20,6 +20,7 @@ var app = express();
 // basic authentication
 app.use(basicAuth({
     users: { 'happyrest': '1234' },
+    challenge: true,
     unauthorizedResponse: getUnauthorizedResponse
 }))
 
