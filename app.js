@@ -5,13 +5,18 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+
+// route files
 var index = require('./routes/index');
 var users = require('./routes/users');
 var hike = require('./routes/hike');
+var order = require('./routes/order');
 
 var app = express();
 app.get('/hikes', hike.index);
 app.post('/add_hike', hike.add_hike);
+app.get('/get_last_order', order.get_last_order);
+app.get('/get_order/:order_number', order.get_order);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
