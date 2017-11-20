@@ -26,7 +26,7 @@ app.use(basicAuth({
 
 function getUnauthorizedResponse(req) {
     return req.auth ?
-        ('Credentials ' + req.auth.user + ':' + req.auth.password + ' rejected') :
+        ('Credentials  rejected') :
         'No credentials provided'
 }
 
