@@ -17,10 +17,9 @@ var take = require('./routes/take');
 // app instance
 var app = express();
 
-// basic authentication
+app.use('/', index);
 app.use(basicAuth({
     users: { 'happyrest': '1234' },
-    challenge: true,
     unauthorizedResponse: getUnauthorizedResponse
 }))
 
@@ -30,14 +29,13 @@ function getUnauthorizedResponse(req) {
         'No credentials provided'
 }
 
-// route url
+// route url authorized
 app.get('/hikes', hike.index);
 app.post('/add_hike', hike.add_hike);
 app.get('/get_last_order', order.get_last_order);
 app.get('/get_order/:order_number', order.get_order);
 app.get('/get_examine_info/:order_number', examine.get_examine_info);
 app.get('/get_take_info/:order_number', take.get_take_info);
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -51,7 +49,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+
 app.use('/users', users);
 
 // catch 404 and forward to error handler
